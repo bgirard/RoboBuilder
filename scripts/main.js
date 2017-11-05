@@ -1,3 +1,7 @@
+let cameraX = 0;
+let cameraY = 0;
+let gameBoard = new GameBoard();
+
 var app = new PIXI.Application(800, 600, {backgroundColor : 0x1099bb});
 document.body.appendChild(app.view);
 

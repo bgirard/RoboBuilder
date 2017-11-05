@@ -18,7 +18,7 @@ const Item = {
 
 class GameBoard {
   constructor() {
-
+    this.buildings = [];
   }
 
   getGroundType(x, y) {
@@ -36,10 +36,19 @@ class GameBoard {
   }
 
   getBuilding(x, y) {
+    for (let b of buildings) {
+      if (b.x === x || b.y === y) {
+        return b;
+      }
+    }
     return null;
   }
 
   getRobots() {
     return [];
+  }
+
+  createBuilding(x, y) {
+    this.buildings.push(new Building('factory', x, y)); 
   }
 }
