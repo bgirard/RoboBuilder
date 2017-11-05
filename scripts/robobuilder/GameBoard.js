@@ -13,8 +13,10 @@ const GroundType = {
 
 const Item = {
   IRON_ORE: {
+    asset: 'ore_iron',
   },
   COPPER_ORE: {
+    asset: 'ore_copper',
   },
 };
 
@@ -31,7 +33,7 @@ class GameBoard {
   }
 
   getOre(x, y) {
-    if (x == 0 && y == 0) {
+    if (2 <= x && x <= 5 && 3 <= y && y <= 6) {
       return Item.IRON_ORE; 
     }
     return null;
@@ -43,5 +45,21 @@ class GameBoard {
 
   getRobots() {
     return [];
+  }
+  
+  buildTileSprite(x, y) {
+    let groundType = this.getGroundType(x, y);
+    let sprite = new PIXI.Sprite(AssetLoader.getAssetTexture(groundType.asset));
+    
+    let ore = this.getOre(x, y);
+    if (ore) {
+      let oreSprite = new PIXI.Sprite(AssetLoader.getAssetTexture(ore.asset));
+      sprite.addChild(oreSprite);
+    }
+    
+    sprite.width = TILE_SIZE.x;
+    sprite.height = TILE_SIZE.y;
+    
+    return sprite;
   }
 }
