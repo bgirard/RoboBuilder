@@ -11,14 +11,12 @@ function startGame() {
   document.body.appendChild(app.view);
   
   let boardSprite = new PIXI.Container();
-  for (var col = 0; col < GAME_SIZE.x / TILE_SIZE.x; col ++) {
-    for (var row = 0; row < GAME_SIZE.y / TILE_SIZE.y; row ++) {
-      let groundType = gameBoard.getGroundType(col, row);
-      let sprite = new PIXI.Sprite(AssetLoader.getAssetTexture(groundType.asset));
-      sprite.x = col * TILE_SIZE.x;
-      sprite.y = row * TILE_SIZE.y;
-      sprite.width = TILE_SIZE.x;
-      sprite.height = TILE_SIZE.y;
+  for (var x = 0; x < GAME_SIZE.x / TILE_SIZE.x; x ++) {
+    for (var y = 0; y < GAME_SIZE.y / TILE_SIZE.y; y ++) {
+      let sprite = gameBoard.buildTileSprite(x, y);
+      sprite.x = x * TILE_SIZE.x;
+      sprite.y = y * TILE_SIZE.y;
+      
       boardSprite.addChild(sprite);
     }
   }
