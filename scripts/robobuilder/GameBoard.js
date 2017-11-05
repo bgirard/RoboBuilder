@@ -67,6 +67,7 @@ class GameBoard {
     sprite.height = TILE_SIZE.y;
     
     return sprite;
+  }
 
   createBuilding(x, y) {
     this.buildings.push(new Building('factory', x, y)); 
