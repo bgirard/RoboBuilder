@@ -2,10 +2,12 @@ const GroundType = {
   SPACE: {
     id: 0,
     name: 'space',
+    asset: 'terrain_grass',
   },
   DIRT: {
     id: 1,
     name: 'dirt',
+    asset: 'terrain_dirt',
   },
 };
 
