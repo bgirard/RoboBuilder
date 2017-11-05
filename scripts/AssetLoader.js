@@ -6,7 +6,7 @@ class AssetLoader {
     if (assetName in PIXI.loader.resources) {
       return PIXI.loader.resources[assetName].texture;
     }
-    throw new Exception("asset " + assetName = " not loaded");
+    throw new Exception("asset " + assetName + " not loaded");
   }
   
   static loadAllAssets(callback) {
