@@ -23,7 +23,6 @@ function startGame() {
     }
   }
   app.stage.addChild(boardSprite);
-  console.log(boardSprite);
   
   // create a new Sprite from an image path
   var bunny = PIXI.Sprite.fromImage('assets/robot.png')
