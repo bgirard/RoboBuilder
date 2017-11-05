@@ -19,6 +19,7 @@ const Item = {
 class GameBoard {
   constructor() {
     this.buildings = [];
+    this.robots = [];
   }
 
   getGroundType(x, y) {
@@ -50,5 +51,9 @@ class GameBoard {
 
   createBuilding(x, y) {
     this.buildings.push(new Building('factory', x, y)); 
+  }
+
+  createRobot(x, y) {
+    this.robots.push(new Robot('robot', x, y));
   }
 }
