@@ -22,7 +22,8 @@ const Item = {
 
 class GameBoard {
   constructor() {
-
+    this.buildings = [];
+    this.robots = [];
   }
 
   getGroundType(x, y) {
@@ -40,6 +41,11 @@ class GameBoard {
   }
 
   getBuilding(x, y) {
+    for (let b of buildings) {
+      if (b.x === x || b.y === y) {
+        return b;
+      }
+    }
     return null;
   }
 
@@ -61,5 +67,12 @@ class GameBoard {
     sprite.height = TILE_SIZE.y;
     
     return sprite;
+
+  createBuilding(x, y) {
+    this.buildings.push(new Building('factory', x, y)); 
+  }
+
+  createRobot(x, y) {
+    this.robots.push(new Robot('robot', x, y));
   }
 }
