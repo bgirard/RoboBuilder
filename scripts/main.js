@@ -82,6 +82,7 @@ function startGame() {
     for (r of gameBoard.getRobots()) {
       r.onTick(delta);
     }
+    gameBoard.updateIdleRobots();
   });
 
   const LEFT_ARROW = 37;
@@ -132,7 +133,7 @@ function createElement(container, tagName, style) {
   return element;
 }
 
-Array.prototype.remByVal = function(val) {
+Array.prototype.remove = function(val) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] === val) {
       this.splice(i, 1);

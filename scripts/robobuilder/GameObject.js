@@ -53,7 +53,8 @@ class GameObject {
           alert('No hauler robot to unassigned');
           return;
         }
-        currBuilding.unassignHauler(haulers[0]);
+        currBuilding.unassignRobot(haulers[0]);
+        this.refreshTab();
       }.bind(this);
       let assignRobotPlusBtn = createElement(assignRobotDiv, 'span', {});
       assignRobotPlusBtn.textContent = '+';
@@ -66,6 +67,7 @@ class GameObject {
         }
         let idleRobot = idleRobots[0];
         currBuilding.assignRobot(idleRobot);
+        this.refreshTab();
       }.bind(this);
       let craftTarget = currBuilding.getCraftTarget();
       if (craftTarget) {
