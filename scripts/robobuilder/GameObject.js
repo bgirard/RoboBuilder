@@ -37,10 +37,14 @@ class GameObject {
   }
 
   refreshTab() {
-    let currBuilding = this.gameBoard.getBuilding(
-      this.selectedCoord.x, 
-      this.selectedCoord.y,
-    );
+    let currBuilding = null;
+    
+    if (this.selectedCoord) {
+      currBuilding= this.gameBoard.getBuilding(
+        this.selectedCoord.x, 
+        this.selectedCoord.y,
+      );
+    }
 
     if (currBuilding) {
       let craftingDiv = document.getElementById('craftingStatus');
