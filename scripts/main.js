@@ -123,6 +123,15 @@ function startGame() {
   };
 }
 
+function createElement(container, tagName, style) {
+  let element = document.createElement(tagName);
+  for (let s of Object.keys(style)) {
+    element.style[s] = style[s];
+  }
+  container.appendChild(element);
+  return element;
+}
+
 Array.prototype.remByVal = function(val) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] === val) {

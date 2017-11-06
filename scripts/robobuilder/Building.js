@@ -48,7 +48,7 @@ class Building {
     robot.assignedTo = null;
   }
 
-  getHaulers(robot) {
+  getHaulers() {
     return this.haulers;
   }
 

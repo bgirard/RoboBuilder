@@ -42,8 +42,9 @@ class GameObject {
     if (currBuilding) {
       let craftingDiv = document.getElementById('craftingStatus');
       craftingDiv.innerHTML = "";
+      createElement(craftingDiv, 'div', {}).textContent = "Assigned Robots: " + currBuilding.getHaulers().length;
       if (currBuilding.getCraftTarget()) {
-        craftingDiv.textContent = "Crafting: " + currBuilding.getCraftTarget().name;
+        createElement(craftingDiv, 'div', {}).textContent = "Crafting: " + currBuilding.getCraftTarget().name;
       }
     }
   }
