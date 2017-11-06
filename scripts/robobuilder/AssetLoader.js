@@ -15,6 +15,7 @@ class AssetLoader {
       .add('ore_gold', '/assets/ore_gold.png')
       .add('ore_iron', '/assets/ore_iron.png')
       .add('robot', '/assets/robot.png')
+      .add('factory', '/assets/factory.png')
       .add('terrain_dirt', '/assets/terrain_dirt.png')
       .add('terrain_grass', '/assets/terrain_grass.png')
       .once('complete', function(loader, resources) {

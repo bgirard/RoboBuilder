@@ -8,8 +8,7 @@ class Building {
   }
 
   createPixiObject() {
-    let factory = PIXI.Sprite.fromImage('assets/robot.png');
-    factory.rotation = 3.14 / 2;
+    let factory = new PIXI.Sprite(AssetLoader.getAssetTexture('factory'));
 
     // center the sprite's anchor point
     factory.anchor.set(0.5);

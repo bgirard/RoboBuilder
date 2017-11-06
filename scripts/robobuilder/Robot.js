@@ -20,7 +20,7 @@ class Robot {
   }
 
   createPixiObject() {
-    let robot = PIXI.Sprite.fromImage('assets/robot.png');
+    let robot = new PIXI.Sprite(AssetLoader.getAssetTexture('robot'));
 
     // center the sprite's anchor point
     robot.anchor.set(0.5);
