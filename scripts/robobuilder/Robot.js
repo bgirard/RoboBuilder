@@ -25,8 +25,8 @@ class Robot {
     // center the sprite's anchor point
     robot.anchor.set(0.5);
 
-    robot.width = TILE_SIZE.x;
-    robot.height = TILE_SIZE.y;
+    robot.width = TILE_SIZE.x / 4 * 3;
+    robot.height = TILE_SIZE.y / 4 * 3;
 
     // move the sprite to the center of the screen
     robot.x = this.x;

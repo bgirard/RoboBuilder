@@ -6,6 +6,9 @@ class GameObject {
   
   setSelected(coord) {
     this.selectedCoord = coord;
+    
+    this.gameBoard.setSelectedCoord(coord);
+    
     let ore = this.gameBoard.getOre(coord.x, coord.y);
     let ground = this.gameBoard.getGroundType(coord.x, coord.y);
     let building = this.gameBoard.getBuilding(coord.x, coord.y);

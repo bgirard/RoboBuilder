@@ -33,8 +33,14 @@ class GameBoard {
     this.pixiObject.addChild(this.pixiBuildingContainer);
     this.pixiRobotContainer = new PIXI.Container();
     this.pixiObject.addChild(this.pixiRobotContainer);
+    
+    this.selectionSprite = new PIXI.Graphics();
+    this.selectionSprite.lineStyle(3, 0xFFFF00);
+    this.selectionSprite.drawRect(0, 0, TILE_SIZE.x, TILE_SIZE.y);
+    this.selectionSprite.visible = false;
 
     container.addChild(this.pixiObject);
+    container.addChild(this.selectionSprite);
   }
 
   createPixiObject() {
@@ -120,5 +126,15 @@ class GameBoard {
     let robot = new Robot(this.pixiRobotContainer, 'robot', x, y);
     this.robots.push(robot);
     return robot;
+  }
+  
+  setSelectedCoord(coord) {
+    if (coord === null) {
+      this.selectionSprite.visible = false;
+      return;
+    }
+    this.selectionSprite.x = coord.x * TILE_SIZE.x;
+    this.selectionSprite.y = coord.y * TILE_SIZE.y;
+    this.selectionSprite.visible = true;
   }
 }
