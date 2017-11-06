@@ -19,7 +19,6 @@ class GameObject {
       controlsContainer.className = 'groundSelected';
     } else {
       controlsContainer.className = '';
-    }
-    
+    }  
   }
 }

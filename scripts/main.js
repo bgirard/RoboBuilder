@@ -26,6 +26,23 @@ function startGame() {
     
     gameObject.setSelected(clickCoord);
   });
+  
+  document.getElementById('controlsContainer').addEventListener('click', (event) => {
+    let command = event.target.getAttribute('data-command');
+    if (!command || !gameObject.selectedCoord) {
+      return;
+    }
+    switch (command) {
+      case 'build-robot':
+      
+        gameBoard.createRobot(
+          (gameObject.selectedCoord.x + Math.random() * 2 - 1) * TILE_SIZE.x, 
+          (gameObject.selectedCoord.y + Math.random() * 2 - 1) * TILE_SIZE.y
+        );
+      break;
+    }
+    
+  });
 
   // Listen for animate update
   app.ticker.add(function(delta) {

@@ -15,6 +15,9 @@ const Item = {
   IRON_ORE: {
     asset: 'ore_iron',
   },
+  GOLD_ORE: {
+    asset: 'ore_gold',
+  },
   COPPER_ORE: {
     asset: 'ore_copper',
   },
@@ -62,6 +65,14 @@ class GameBoard {
   getOre(x, y) {
     if (2 <= x && x <= 5 && 3 <= y && y <= 6) {
       return Item.IRON_ORE; 
+    }
+    
+    if (1 <= x && x <= 2 && 1 <= y && y <= 2) {
+      return Item.COPPER_ORE; 
+    }
+    
+    if (3 <= x && x <= 4 && 1 <= y && y <= 3) {
+      return Item.GOLD_ORE;
     }
     return null;
   }
