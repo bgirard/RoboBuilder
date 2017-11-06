@@ -15,6 +15,26 @@ class Robot {
     this.orderX = 0;
     this.orderY = 0;
     this.container = container;
+
+    this.pixiObject = this.createPixiObject();
+  }
+
+  createPixiObject() {
+    let robot = PIXI.Sprite.fromImage('assets/robot.png');
+
+    // center the sprite's anchor point
+    robot.anchor.set(0.5);
+
+    robot.width = TILE_SIZE.x;
+    robot.height = TILE_SIZE.y;
+
+    // move the sprite to the center of the screen
+    robot.x = this.x;
+    robot.y = this.y;
+
+    this.container.addChild(robot);
+
+    return robot;
   }
 
   getX() {
