@@ -11,18 +11,6 @@ const GroundType = {
   },
 };
 
-const Item = {
-  IRON_ORE: {
-    asset: 'ore_iron',
-  },
-  GOLD_ORE: {
-    asset: 'ore_gold',
-  },
-  COPPER_ORE: {
-    asset: 'ore_copper',
-  },
-};
-
 class GameBoard {
   constructor(container) {
     this.buildings = [];
@@ -94,6 +82,16 @@ class GameBoard {
 
   getRobots() {
     return this.robots;
+  }
+
+  getIdleRobots() {
+    let array = [];
+    for (let r of this.robots) {
+      if (r.isIdle()) {
+        array.push(r);
+      }
+    }
+    return array;
   }
   
   getPixiContainer() {
