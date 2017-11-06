@@ -19,6 +19,11 @@
 
 #controlsContainer.oreSelected .oreControls,
 #controlsContainer.groundSelected .groundControls,
-#controlsContainer.factorySelected .factoryControls {
+#controlsContainer.factorySelected .factoryControls,
+#controlsContainer .idleRobots {
   display: block;
+}
+
+#controlsContainer .idleRobots {
+  margin: 8px;
 }
