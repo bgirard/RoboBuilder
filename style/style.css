@@ -20,6 +20,19 @@
 #controlsContainer.oreSelected .oreControls,
 #controlsContainer.groundSelected .groundControls,
 #controlsContainer.factorySelected .factoryControls,
+#controlsContainer .idleRobots,
 #controlsContainer.recipeSelected .recipeControls {
   display: block;
+}
+
+#controlsContainer .idleRobots {
+  margin: 8px;
+}
+
+#controlsContainer div[data-command] {
+  margin: 8px;
+  padding: 2px;
+  background: #92bbfc;
+  border: 1px solid black;
+  cursor: pointer;
 }

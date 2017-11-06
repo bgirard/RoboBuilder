@@ -29,6 +29,13 @@ class GameBoard {
 
     container.addChild(this.pixiObject);
     container.addChild(this.selectionSprite);
+    
+    this.updateIdleRobots();
+  }
+  
+  updateIdleRobots() {
+    let idleCount = document.getElementsByClassName("idleCount");
+    idleCount[0].innerText = this.getIdleRobots().length;
   }
 
   createPixiObject() {
@@ -123,6 +130,7 @@ class GameBoard {
   createRobot(x, y) {
     let robot = new Robot(this.pixiRobotContainer, 'robot', x, y);
     this.robots.push(robot);
+    this.updateIdleRobots();
     return robot;
   }
   
