@@ -1,5 +1,7 @@
 const OrderType = {
-  PICKUP: {
+  MINE: {
+  },
+  MOVE: {
   },
   DROPOFF: {
   },
@@ -86,9 +88,11 @@ class Robot {
         let pos = this.getCurrentPos();
         let target = this.gameObject.gameBoard.findItem(targetInput, pos[0], pos[1]);
         if (target) {
-          this.pickupItem(target[0] * TILE_SIZE.x + TILE_SIZE.centerX, target[1] * TILE_SIZE.y + TILE_SIZE.centerY);
+          this.moveTo(target[0] * TILE_SIZE.x + TILE_SIZE.centerX, target[1] * TILE_SIZE.y + TILE_SIZE.centerY);
         }
       }
+    } else if (this.getMoveProgress() === 1) {
+      this.stopOrder(); // Done movement
     }
   }
 
@@ -104,26 +108,39 @@ class Robot {
     this.order = null;
   }
 
-  getCurrentPos() {
+  getMoveProgress() {
     if (this.order === null) {
-      return [this.x, this.y];
+      return null;
     }
     let dx = this.orderX - this.x;
     let dy = this.orderY - this.y;
     let dt = performance.now() - this.orderStart;
     let totalDist = Math.sqrt(dx * dx + dy * dy);
+    if (totalDist <= 0) {
+      return 1;
+    }
     let speed = this.getSpeed();
     let travelDist = dt / 1000.0 * speed;
     let progress = travelDist / totalDist;
     if (progress > 1 ) {
       progress = 1;
     }
+    return progress; 
+  }
+
+  getCurrentPos() {
+    if (this.order === null) {
+      return [this.x, this.y];
+    }
+    let dx = this.orderX - this.x;
+    let dy = this.orderY - this.y;
+    let progress = this.getMoveProgress();
     
     return [this.x + progress * dx, this.y + progress * dy];
   }
 
-  pickupItem(x, y) {
-    this.order = OrderType.PICKUP;
+  moveTo(x, y) {
+    this.order = OrderType.MOVE;
     this.orderX = x;
     this.orderY = y;
     this.orderStart = performance.now();
