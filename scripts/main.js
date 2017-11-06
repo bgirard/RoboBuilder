@@ -35,8 +35,8 @@ function startGame() {
     switch (command) {
       case 'build-robot':
         gameBoard.createRobot(
-          (gameObject.selectedCoord.x + Math.random() * 2 - 1) * TILE_SIZE.x, 
-          (gameObject.selectedCoord.y + Math.random() * 2 - 1) * TILE_SIZE.y,
+          (gameObject.selectedCoord.x + Math.random() * 3 - 1) * TILE_SIZE.x, 
+          (gameObject.selectedCoord.y + Math.random() * 3 - 1) * TILE_SIZE.y,
         );
       case 'build-factory':
         let currBuilding = gameBoard.getBuilding(
