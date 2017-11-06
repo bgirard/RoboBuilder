@@ -64,6 +64,9 @@ class Robot {
   }
 
   getCurrentPos() {
+    if (this.order === null) {
+      return [this.x, this.y];
+    }
     let dx = this.orderX - this.x;
     let dy = this.orderY - this.y;
     let dt = performance.now() - this.orderStart;

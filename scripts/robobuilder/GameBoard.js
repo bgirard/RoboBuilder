@@ -67,6 +67,10 @@ class GameBoard {
       return Item.IRON_ORE; 
     }
     
+    if (1 <= x && x <= 2 && 1 <= y && y <= 2) {
+      return Item.COPPER_ORE; 
+    }
+    
     if (3 <= x && x <= 4 && 1 <= y && y <= 3) {
       return Item.GOLD_ORE;
     }
