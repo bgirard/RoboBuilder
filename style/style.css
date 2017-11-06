@@ -28,3 +28,11 @@
 #controlsContainer .idleRobots {
   margin: 8px;
 }
+
+#controlsContainer div[data-command] {
+  margin: 8px;
+  padding: 2px;
+  background: #92bbfc;
+  border: 1px solid black;
+  cursor: pointer;
+}
