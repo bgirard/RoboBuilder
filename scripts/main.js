@@ -6,8 +6,8 @@ AssetLoader.loadAllAssets(() => {
 });
 
 function startGame() {
-  let gameObject = new GameObject();
   let gameBoard = new GameBoard();
+  let gameObject = new GameObject(gameBoard);
   let app = new PIXI.Application(GAME_SIZE.x, GAME_SIZE.y, {backgroundColor : 0x1099bb});
   document.getElementById('canvasContainer').appendChild(app.view);
   

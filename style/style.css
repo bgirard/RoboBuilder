@@ -7,8 +7,20 @@
   float: left;
 }
 
-.controlsContainer {
+#controlsContainer {
   float: right; 
   width: 200px;
   height: 600px;
+}
+
+#controlsContainer > div {
+  display: none;
+}
+
+#controlsContainer.oreSelected .oreControls {
+  display: block;
+}
+
+#controlsContainer.groundSelected .groundControls {
+  display: block;
 }
