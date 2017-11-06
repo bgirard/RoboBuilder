@@ -1,5 +1,6 @@
 class Building {
-  constructor(type, x, y) {
+  constructor(container, type, x, y) {
+    this.container = container;
     this.type = type;
     this.x = x;
     this.y = y;

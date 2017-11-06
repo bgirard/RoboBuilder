@@ -6,7 +6,7 @@ const OrderType = {
 };
 
 class Robot {
-  constructor(type, x, y) {
+  constructor(container, type, x, y) {
     this.type = type;
     this.x = x;
     this.y = y;
@@ -14,6 +14,7 @@ class Robot {
     this.order = null;
     this.orderX = 0;
     this.orderY = 0;
+    this.container = container;
   }
 
   getX() {
