@@ -1,5 +1,5 @@
 class Building {
-  constructor(container, type, x, y) {
+  constructor(gameObject, container, type, x, y) {
     this.container = container;
     this.type = type;
     this.x = x;
@@ -9,6 +9,7 @@ class Building {
     this.craftTarget = null;
     this.inputItem = null;
     this.outputItem = null;
+    this.gameObject = gameObject;
   }
 
   createPixiObject() {
@@ -39,7 +40,7 @@ class Building {
 
   assignRobot(robot) {
     this.haulers.push(robot);
-    robot.assignedTo = this;
+    robot.assignTo(this);
   }
 
   unassignRobot(robot) {
@@ -47,7 +48,7 @@ class Building {
       throw new Error("not assigned to this");
     }
     this.haulers.remove(robot);
-    robot.assignedTo = null;
+    robot.assignTo(null);
   }
 
   getHaulers() {

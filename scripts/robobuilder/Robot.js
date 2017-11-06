@@ -6,16 +6,18 @@ const OrderType = {
 };
 
 class Robot {
-  constructor(container, type, x, y) {
+  constructor(gameObject, container, type, x, y) {
     this.type = type;
     this.x = x;
     this.y = y;
+    this.gameObject = gameObject;
     this.assignedTo = null;
-    this.cargo = Item.IRON_ORE;
+    this.cargo = null; //Item.IRON_ORE;
     this.order = null;
     this.orderX = 0;
     this.orderY = 0;
     this.container = container;
+    this.gameObject = gameObject;
 
     this.pixiObject = this.createPixiObject();
   }
@@ -71,9 +73,35 @@ class Robot {
   }
 
   onTick() {
+    this.updateOrder();
     let pos = this.getCurrentPos();
     this.pixiObject.x = pos[0];
     this.pixiObject.y = pos[1];
+  }
+
+  updateOrder() {
+    if (!this.order) {
+      if (!this.cargo && this.assignedTo && this.assignedTo.getCraftTarget()) {
+        let targetInput = Item[this.assignedTo.getCraftTarget().recipe.input];
+        let pos = this.getCurrentPos();
+        let target = this.gameObject.gameBoard.findItem(targetInput, pos[0], pos[1]);
+        if (target) {
+          this.pickupItem(target[0] * TILE_SIZE.x + TILE_SIZE.centerX, target[1] * TILE_SIZE.y + TILE_SIZE.centerY);
+        }
+      }
+    }
+  }
+
+  assignTo(factory) {
+    this.stopOrder();
+    this.assignedTo = factory;
+  }
+
+  stopOrder() {
+    let pos = this.getCurrentPos();
+    this.x = pos[0];
+    this.y = pos[1];
+    this.order = null;
   }
 
   getCurrentPos() {

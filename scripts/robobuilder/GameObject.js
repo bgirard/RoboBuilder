@@ -1,7 +1,10 @@
 class GameObject {
   constructor(gameBoard) {
     this.selectedCoord = null;
-    this.gameBoard = gameBoard;
+  }
+
+  setGameBoard(board) {
+    this.gameBoard = board;
   }
   
   setSelected(coord) {

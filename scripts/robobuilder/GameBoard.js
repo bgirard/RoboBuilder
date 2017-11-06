@@ -12,7 +12,8 @@ const GroundType = {
 };
 
 class GameBoard {
-  constructor(container) {
+  constructor(gameObject, container) {
+    this.gameObject = gameObject;
     this.buildings = [];
     this.robots = [];
     this.container = container;
@@ -121,14 +122,35 @@ class GameBoard {
     return sprite;
   }
 
+  findItem(item, targetX, targetY) {
+    targetX = targetX || 0;
+    targetY = targetY || 0;
+    let bestFit = null;
+    let bestFitDistSq = 0;
+    for (var x = 0; x < GAME_SIZE.x / TILE_SIZE.x; x ++) {
+      for (var y = 0; y < GAME_SIZE.y / TILE_SIZE.y; y ++) {
+        if (this.getOre(x, y) == item) {
+          const dx = x - targetX;
+          const dy = y - targetY;
+          const distSq = dx * dx + dy * dy;
+          if (!bestFit || distSq < bestFitDistSq) {
+            bestFit = [x, y];
+            bestFitDistSq = distSq;
+          }
+        }
+      }
+    }
+    return bestFit;
+  }
+
   createBuilding(x, y) {
-    let factory = new Building(this.pixiBuildingContainer, 'factory', x, y);
+    let factory = new Building(this.gameObject, this.pixiBuildingContainer, 'factory', x, y);
     this.buildings.push(factory);
     return factory;
   }
 
   createRobot(x, y) {
-    let robot = new Robot(this.pixiRobotContainer, 'robot', x, y);
+    let robot = new Robot(this.gameObject, this.pixiRobotContainer, 'robot', x, y);
     this.robots.push(robot);
     this.updateIdleRobots();
     return robot;
