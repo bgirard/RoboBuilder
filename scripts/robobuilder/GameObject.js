@@ -42,7 +42,31 @@ class GameObject {
     if (currBuilding) {
       let craftingDiv = document.getElementById('craftingStatus');
       craftingDiv.innerHTML = "";
-      createElement(craftingDiv, 'div', {}).textContent = "Assigned Robots: " + currBuilding.getHaulers().length;
+      let assignRobotDiv = createElement(craftingDiv, 'div', {});
+      assignRobotDiv.textContent = "Assigned Robots: " + currBuilding.getHaulers().length;
+      let assignRobotMinusBtn = createElement(assignRobotDiv, 'span', {});
+      assignRobotMinusBtn.textContent = '-';
+      assignRobotMinusBtn.setAttribute('data-command', 'onclick');
+      assignRobotMinusBtn.onclick = function() {
+        let haulers = currBuilding.getHaulers();
+        if (haulers.length === 0) {
+          alert('No hauler robot to unassigned');
+          return;
+        }
+        currBuilding.unassignHauler(haulers[0]);
+      }.bind(this);
+      let assignRobotPlusBtn = createElement(assignRobotDiv, 'span', {});
+      assignRobotPlusBtn.textContent = '+';
+      assignRobotPlusBtn.setAttribute('data-command', 'onclick');
+      assignRobotPlusBtn.onclick = function() {
+        let idleRobots = this.gameBoard.getIdleRobots();
+        if (idleRobots.length === 0) {
+          alert('No idle robots to assigned');
+          return;
+        }
+        let idleRobot = idleRobots[0];
+        currBuilding.assignRobot(idleRobot);
+      }.bind(this);
       let craftTarget = currBuilding.getCraftTarget();
       if (craftTarget) {
         // Assume that we can't have an in/out item that doesn't match recipe

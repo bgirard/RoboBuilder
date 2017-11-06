@@ -29,7 +29,8 @@
   margin: 8px;
 }
 
-#controlsContainer div[data-command] {
+#controlsContainer div[data-command],
+#controlsContainer span[data-command]{
   margin: 8px;
   padding: 2px;
   background: #92bbfc;
