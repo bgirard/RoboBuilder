@@ -6,16 +6,23 @@ AssetLoader.loadAllAssets(() => {
 });
 
 function startGame() {
+  let gameObject = new GameObject();
   let gameContainer = new PIXI.Container();
 
   let gameBoard = new GameBoard(gameContainer);
   gameBoard.createRobot(5 * TILE_SIZE.x, 5 * TILE_SIZE.y);
   let app = new PIXI.Application(GAME_SIZE.x, GAME_SIZE.y, {backgroundColor : 0x1099bb});
-  document.body.appendChild(app.view);
+  document.getElementById('canvasContainer').appendChild(app.view);
   
   let boardSprite = gameBoard.getPixiContainer();
   app.stage.addChild(gameContainer);
   
+  app.view.addEventListener('click', (event) => {
+    let clickCoord = gameBoard.getCoordFromPosition(event.offsetX, event.offsetY);
+    
+    gameObject.setSelected(clickCoord);
+  });
+
   // Listen for animate update
   app.ticker.add(function(delta) {
       // just for fun, let's rotate mr rabbit a little
@@ -23,7 +30,6 @@ function startGame() {
       // creates frame-independent tranformation
       //bunny.rotation += 0.1 * delta;
   });
-
 
   const LEFT_ARROW = 37;
   const UP_ARROW = 38;
