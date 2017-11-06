@@ -17,10 +17,8 @@
   display: none;
 }
 
-#controlsContainer.oreSelected .oreControls {
-  display: block;
-}
-
-#controlsContainer.groundSelected .groundControls {
+#controlsContainer.oreSelected .oreControls,
+#controlsContainer.groundSelected .groundControls,
+#controlsContainer.factorySelected .factoryControls {
   display: block;
 }

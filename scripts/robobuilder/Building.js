@@ -17,8 +17,8 @@ class Building {
     factory.height = TILE_SIZE.y;
 
     // move the sprite to the center of the screen
-    factory.x = this.x;
-    factory.y = this.y;
+    factory.x = (this.x + 0.5) * TILE_SIZE.x;
+    factory.y = (this.y + 0.5) * TILE_SIZE.y;
 
     this.container.addChild(factory);
 

@@ -8,12 +8,17 @@ class GameObject {
     this.selectedCoord = coord;
     let ore = this.gameBoard.getOre(coord.x, coord.y);
     let ground = this.gameBoard.getGroundType(coord.x, coord.y);
-    if (ore) {
-      document.getElementById('controlsContainer').className = 'oreSelected';
+    let building = this.gameBoard.getBuilding(coord.x, coord.y);
+    
+    const controlsContainer = document.getElementById('controlsContainer');
+    if (building) {
+      controlsContainer.className = 'factorySelected';
+    } else if (ore) {
+      controlsContainer.className = 'oreSelected';
     } else if (ground.name == "dirt") {
-      document.getElementById('controlsContainer').className = 'groundSelected';
+      controlsContainer.className = 'groundSelected';
     } else {
-      document.getElementById('controlsContainer').className = '';
+      controlsContainer.className = '';
     }
     
   }
