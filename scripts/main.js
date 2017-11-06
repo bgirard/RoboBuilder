@@ -6,9 +6,10 @@ AssetLoader.loadAllAssets(() => {
 });
 
 function startGame() {
+  let gameObject = new GameObject();
   let gameBoard = new GameBoard();
   let app = new PIXI.Application(GAME_SIZE.x, GAME_SIZE.y, {backgroundColor : 0x1099bb});
-  document.body.appendChild(app.view);
+  document.getElementById('canvasContainer').appendChild(app.view);
   
   let boardSprite = new PIXI.Container();
   for (var x = 0; x < GAME_SIZE.x / TILE_SIZE.x; x ++) {
@@ -36,6 +37,12 @@ function startGame() {
   bunny.y = app.renderer.height / 2;
 
   app.stage.addChild(bunny);
+  
+  app.view.addEventListener('click', (event) => {
+    let clickCoord = gameBoard.getCoordFromPosition(event.offsetX, event.offsetY);
+    
+    gameObject.setSelected(clickCoord);
+  });
 
   // Listen for animate update
   app.ticker.add(function(delta) {

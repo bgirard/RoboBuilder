@@ -1,0 +1,14 @@
+.gameContainer {
+  width: 1000px; 
+  height: 600px;
+}
+
+#canvasContainer {
+  float: left;
+}
+
+.controlsContainer {
+  float: right; 
+  width: 200px;
+  height: 600px;
+}

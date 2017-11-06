@@ -25,6 +25,10 @@ class GameBoard {
     this.buildings = [];
     this.robots = [];
   }
+  
+  getCoordFromPosition(posX, posY) {
+    return {x: Math.floor(posX / TILE_SIZE.x), y: Math.floor(posY / TILE_SIZE.y)};
+  }
 
   getGroundType(x, y) {
     if (x * x + y * y < 100) {
