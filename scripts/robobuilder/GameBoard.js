@@ -67,8 +67,8 @@ class GameBoard {
   }
 
   getBuilding(x, y) {
-    for (let b of buildings) {
-      if (b.x === x || b.y === y) {
+    for (let b of this.buildings) {
+      if (b.x === x && b.y === y) {
         return b;
       }
     }
