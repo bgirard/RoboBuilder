@@ -6,37 +6,18 @@ AssetLoader.loadAllAssets(() => {
 });
 
 function startGame() {
-  let gameBoard = new GameBoard();
+  let gameContainer = new PIXI.Container();
+
+  let gameBoard = new GameBoard(gameContainer);
   let gameObject = new GameObject(gameBoard);
+  
+  gameBoard.createRobot(5 * TILE_SIZE.x, 5 * TILE_SIZE.y);
+
   let app = new PIXI.Application(GAME_SIZE.x, GAME_SIZE.y, {backgroundColor : 0x1099bb});
   document.getElementById('canvasContainer').appendChild(app.view);
   
-  let boardSprite = new PIXI.Container();
-  for (var x = 0; x < GAME_SIZE.x / TILE_SIZE.x; x ++) {
-    for (var y = 0; y < GAME_SIZE.y / TILE_SIZE.y; y ++) {
-      let sprite = gameBoard.buildTileSprite(x, y);
-      sprite.x = x * TILE_SIZE.x;
-      sprite.y = y * TILE_SIZE.y;
-      
-      boardSprite.addChild(sprite);
-    }
-  }
-  app.stage.addChild(boardSprite);
-  
-  // create a new Sprite from an image path
-  var bunny = PIXI.Sprite.fromImage('assets/robot.png')
-
-  // center the sprite's anchor point
-  bunny.anchor.set(0.5);
-  
-  bunny.width = TILE_SIZE.x;
-  bunny.height = TILE_SIZE.y;
-
-  // move the sprite to the center of the screen
-  bunny.x = app.renderer.width / 2;
-  bunny.y = app.renderer.height / 2;
-
-  app.stage.addChild(bunny);
+  let boardSprite = gameBoard.getPixiContainer();
+  app.stage.addChild(gameContainer);
   
   app.view.addEventListener('click', (event) => {
     let clickCoord = gameBoard.getCoordFromPosition(event.offsetX, event.offsetY);

@@ -21,9 +21,31 @@ const Item = {
 };
 
 class GameBoard {
-  constructor() {
+  constructor(container) {
     this.buildings = [];
     this.robots = [];
+    this.container = container;
+    this.pixiObject = this.createPixiObject();
+    this.pixiBuildingContainer = new PIXI.Container();
+    this.pixiObject.addChild(this.pixiBuildingContainer);
+    this.pixiRobotContainer = new PIXI.Container();
+    this.pixiObject.addChild(this.pixiRobotContainer);
+
+    container.addChild(this.pixiObject);
+  }
+
+  createPixiObject() {
+    let boardSprite = new PIXI.Container();
+    for (var x = 0; x < GAME_SIZE.x / TILE_SIZE.x; x ++) {
+      for (var y = 0; y < GAME_SIZE.y / TILE_SIZE.y; y ++) {
+        let sprite = this.buildTileSprite(x, y);
+        sprite.x = x * TILE_SIZE.x;
+        sprite.y = y * TILE_SIZE.y;
+        
+        boardSprite.addChild(sprite);
+      }
+    }
+    return boardSprite;
   }
   
   getCoordFromPosition(posX, posY) {
@@ -57,6 +79,10 @@ class GameBoard {
     return [];
   }
   
+  getPixiContainer() {
+    return this.pixiObject;
+  }
+
   buildTileSprite(x, y) {
     let groundType = this.getGroundType(x, y);
     let sprite = new PIXI.Sprite(AssetLoader.getAssetTexture(groundType.asset));
@@ -74,10 +100,10 @@ class GameBoard {
   }
 
   createBuilding(x, y) {
-    this.buildings.push(new Building('factory', x, y)); 
+    this.buildings.push(new Building(this.pixiBuildingContainer , 'factory', x, y)); 
   }
 
   createRobot(x, y) {
-    this.robots.push(new Robot('robot', x, y));
+    this.robots.push(new Robot(this.pixiRobotContainer , 'robot', x, y));
   }
 }
