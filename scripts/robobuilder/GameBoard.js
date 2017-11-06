@@ -76,7 +76,7 @@ class GameBoard {
   }
 
   getRobots() {
-    return [];
+    return this.robots;
   }
   
   getPixiContainer() {
@@ -106,8 +106,8 @@ class GameBoard {
   }
 
   createRobot(x, y) {
-    let robot = new Robot(this.pixiBuildingContainer, 'robot', x, y);
-    this.buildings.push(robot);
+    let robot = new Robot(this.pixiRobotContainer, 'robot', x, y);
+    this.robots.push(robot);
     return robot;
   }
 }
