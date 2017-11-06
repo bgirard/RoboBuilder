@@ -9,6 +9,8 @@ function startGame() {
   let gameContainer = new PIXI.Container();
 
   let gameBoard = new GameBoard(gameContainer);
+  let gameObject = new GameObject(gameBoard);
+  
   let robot = gameBoard.createRobot(5 * TILE_SIZE.x, 5 * TILE_SIZE.y);
   let factory = gameBoard.createBuilding(14 * TILE_SIZE.x + TILE_SIZE.centerX, 7 * TILE_SIZE.y + TILE_SIZE.centerY);
   robot.dropoffItem(factory.x, factory.y);
