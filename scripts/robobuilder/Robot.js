@@ -58,6 +58,10 @@ class Robot {
     return this.cargo;
   }
 
+  setCargo(item) {
+    this.cargo = item;
+  }
+
   getType() {
     return this.type;
   }
@@ -82,13 +86,27 @@ class Robot {
   }
 
   updateOrder() {
-    if (!this.order) {
-      if (!this.cargo && this.assignedTo && this.assignedTo.getCraftTarget()) {
-        let targetInput = Item[this.assignedTo.getCraftTarget().recipe.input];
-        let pos = this.getCurrentPos();
+    if (!this.order && this.assignedTo && this.assignedTo.getCraftTarget()) {
+      let targetInput = Item[this.assignedTo.getCraftTarget().recipe.input];
+      let pos = this.getCurrentPos();
+      if (!this.cargo) {
         let target = this.gameObject.gameBoard.findItem(targetInput, pos[0], pos[1]);
         if (target) {
-          this.moveTo(target[0] * TILE_SIZE.x + TILE_SIZE.centerX, target[1] * TILE_SIZE.y + TILE_SIZE.centerY);
+          let targetX = target[0] * TILE_SIZE.x + TILE_SIZE.centerX;
+          let targetY = target[1] * TILE_SIZE.y + TILE_SIZE.centerY;
+          if (pos[0] != targetX || pos[1] != targetY) {
+            this.moveTo(targetX, targetY);
+          } else {
+            this.setCargo(targetInput); 
+          }
+        }
+      } else if (this.cargo === targetInput) {
+        let targetX = this.assignedTo.x * TILE_SIZE.x + TILE_SIZE.centerX;
+        let targetY = this.assignedTo.y * TILE_SIZE.y + TILE_SIZE.centerY;
+        if (pos[0] != targetX || pos[1] != targetY) {
+          this.moveTo(targetX, targetY);
+        } else {
+          //setCargo(targetInput); 
         }
       }
     } else if (this.getMoveProgress() === 1) {
