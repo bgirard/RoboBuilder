@@ -62,6 +62,12 @@ class Robot {
     this.cargo = item;
   }
 
+  takeCargo() {
+    let i = this.cargo;
+    this.cargo = null;
+    return i;
+  }
+
   getType() {
     return this.type;
   }
@@ -106,7 +112,10 @@ class Robot {
         if (pos[0] != targetX || pos[1] != targetY) {
           this.moveTo(targetX, targetY);
         } else {
-          //setCargo(targetInput); 
+          if (this.assignedTo.getInputItem() === null) {
+            let item = this.takeCargo();
+            this.assignedTo.putInputItem(item);
+          }
         }
       }
     } else if (this.getMoveProgress() === 1) {
