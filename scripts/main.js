@@ -60,6 +60,7 @@ function startGame() {
         for (let c of craftable) {
           let recipeItem = document.createElement('div');
           recipeItem.textContent = "Craft: " + c.name;
+          recipeItem.setAttribute('data-command', 'onclick');
           recipeItem.onclick = function() {
             currBuilding.setCraftTarget(c);    
             gameObject.focusDiv('factory');

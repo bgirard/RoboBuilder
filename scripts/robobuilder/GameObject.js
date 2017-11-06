@@ -22,12 +22,29 @@ class GameObject {
       controlsContainer.className = 'groundSelected';
     } else {
       controlsContainer.className = '';
-    }  
+    }
+    this.refreshTab();
   }
 
   focusDiv(id) {
     const controlsContainer = document.getElementById('controlsContainer');
     controlsContainer.className = id + 'Selected';
+    this.refreshTab();
     return document.getElementsByClassName(id + 'Controls')[0];
+  }
+
+  refreshTab() {
+    let currBuilding = this.gameBoard.getBuilding(
+      this.selectedCoord.x, 
+      this.selectedCoord.y,
+    );
+
+    if (currBuilding) {
+      let craftingDiv = document.getElementById('craftingStatus');
+      craftingDiv.innerHTML = "";
+      if (currBuilding.getCraftTarget()) {
+        craftingDiv.textContent = "Crafting: " + currBuilding.getCraftTarget().name;
+      }
+    }
   }
 }
