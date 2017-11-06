@@ -24,4 +24,12 @@ class Building {
 
     return factory;
   }
+
+  getPixelX() {
+    return this.x * TILE_SIZE.x + TILE_SIZE.centerX;
+  }
+
+  getPixelY() {
+    return this.y * TILE_SIZE.y + TILE_SIZE.centerY;
+  }
 };
