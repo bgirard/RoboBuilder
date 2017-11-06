@@ -19,6 +19,7 @@
 
 #controlsContainer.oreSelected .oreControls,
 #controlsContainer.groundSelected .groundControls,
-#controlsContainer.factorySelected .factoryControls {
+#controlsContainer.factorySelected .factoryControls,
+#controlsContainer.recipeSelected .recipeControls {
   display: block;
 }

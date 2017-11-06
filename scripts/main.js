@@ -38,6 +38,7 @@ function startGame() {
           (gameObject.selectedCoord.x + Math.random() * 2 - 1) * TILE_SIZE.x, 
           (gameObject.selectedCoord.y + Math.random() * 2 - 1) * TILE_SIZE.y,
         );
+        break;
       case 'build-factory':
         let currBuilding = gameBoard.getBuilding(
           gameObject.selectedCoord.x, 
@@ -49,7 +50,23 @@ function startGame() {
             gameObject.selectedCoord.y,
           );
         }
-      break;
+        break;
+      case 'pick-recipe':
+        const recipeDiv = gameObject.focusDiv('recipe');
+
+        recipeDiv.innerHTML = "";
+
+        let craftable = getCraftable();
+        for (let c of craftable) {
+          let recipeItem = document.createElement('div');
+          recipeItem.textContent = "Craft: " + c.name;
+          recipeItem.onclick = function() {
+            alert('test');
+          };
+          recipeDiv.appendChild(recipeItem);
+        }
+            
+        break;
     }
     
   });
