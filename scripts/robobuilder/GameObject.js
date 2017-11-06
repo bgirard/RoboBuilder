@@ -24,4 +24,10 @@ class GameObject {
       controlsContainer.className = '';
     }  
   }
+
+  focusDiv(id) {
+    const controlsContainer = document.getElementById('controlsContainer');
+    controlsContainer.className = id + 'Selected';
+    return document.getElementsByClassName(id + 'Controls')[0];
+  }
 }

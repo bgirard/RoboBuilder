@@ -20,7 +20,8 @@
 #controlsContainer.oreSelected .oreControls,
 #controlsContainer.groundSelected .groundControls,
 #controlsContainer.factorySelected .factoryControls,
-#controlsContainer .idleRobots {
+#controlsContainer .idleRobots,
+#controlsContainer.recipeSelected .recipeControls {
   display: block;
 }
 
