@@ -34,11 +34,21 @@ function startGame() {
     }
     switch (command) {
       case 'build-robot':
-      
         gameBoard.createRobot(
           (gameObject.selectedCoord.x + Math.random() * 2 - 1) * TILE_SIZE.x, 
-          (gameObject.selectedCoord.y + Math.random() * 2 - 1) * TILE_SIZE.y
+          (gameObject.selectedCoord.y + Math.random() * 2 - 1) * TILE_SIZE.y,
         );
+      case 'build-factory':
+        let currBuilding = gameBoard.getBuilding(
+          gameObject.selectedCoord.x, 
+          gameObject.selectedCoord.y,
+        );
+        if (currBuilding === null) {
+          gameBoard.createBuilding(
+            gameObject.selectedCoord.x, 
+            gameObject.selectedCoord.y,
+          );
+        }
       break;
     }
     
