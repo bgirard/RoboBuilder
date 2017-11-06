@@ -32,6 +32,10 @@ function startGame() {
     if (!command || !gameObject.selectedCoord) {
       return;
     }
+    let currBuilding = gameBoard.getBuilding(
+      gameObject.selectedCoord.x, 
+      gameObject.selectedCoord.y,
+    );
     switch (command) {
       case 'build-robot':
         gameBoard.createRobot(
@@ -40,10 +44,6 @@ function startGame() {
         );
         break;
       case 'build-factory':
-        let currBuilding = gameBoard.getBuilding(
-          gameObject.selectedCoord.x, 
-          gameObject.selectedCoord.y,
-        );
         if (currBuilding === null) {
           gameBoard.createBuilding(
             gameObject.selectedCoord.x, 
@@ -61,7 +61,8 @@ function startGame() {
           let recipeItem = document.createElement('div');
           recipeItem.textContent = "Craft: " + c.name;
           recipeItem.onclick = function() {
-            alert('test');
+            currBuilding.setCraftTarget(c);    
+            gameObject.focusDiv('factory');
           };
           recipeDiv.appendChild(recipeItem);
         }

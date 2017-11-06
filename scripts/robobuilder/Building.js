@@ -6,6 +6,7 @@ class Building {
     this.y = y;
     this.pixiObject = this.createPixiObject();
     this.haulers = [];
+    this.craftTarget = null;
   }
 
   createPixiObject() {
@@ -49,5 +50,13 @@ class Building {
 
   getHaulers(robot) {
     return this.haulers;
+  }
+
+  setCraftTarget(item) {
+    this.craftTarget = item;
+  }
+
+  getCraftTarget() {
+    return this.craftTarget;
   }
 };
