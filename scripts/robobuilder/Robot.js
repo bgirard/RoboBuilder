@@ -10,6 +10,7 @@ class Robot {
     this.type = type;
     this.x = x;
     this.y = y;
+    this.assignedTo = null;
     this.cargo = Item.IRON_ORE;
     this.order = null;
     this.orderX = 0;
@@ -55,6 +56,18 @@ class Robot {
 
   getType() {
     return this.type;
+  }
+
+  isIdle() {
+    return this.assignedTo === null;
+  }
+
+  isAssigned() { 
+    return !isIdle();
+  }
+
+  getAssignedFactory() {
+    return this.assignedTo;
   }
 
   onTick() {

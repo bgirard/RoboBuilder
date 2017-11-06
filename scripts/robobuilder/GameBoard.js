@@ -78,6 +78,16 @@ class GameBoard {
   getRobots() {
     return this.robots;
   }
+
+  getIdleRobots() {
+    let array = [];
+    for (let r of this.robots) {
+      if (r.isIdle()) {
+        array.push(r);
+      }
+    }
+    return array;
+  }
   
   getPixiContainer() {
     return this.pixiObject;

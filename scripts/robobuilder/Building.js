@@ -5,6 +5,7 @@ class Building {
     this.x = x;
     this.y = y;
     this.pixiObject = this.createPixiObject();
+    this.haulers = [];
   }
 
   createPixiObject() {
@@ -31,5 +32,22 @@ class Building {
 
   getPixelY() {
     return this.y * TILE_SIZE.y + TILE_SIZE.centerY;
+  }
+
+  assignRobot(robot) {
+    this.haulers.push(robot);
+    robot.assignedTo = this;
+  }
+
+  unassignRobot(robot) {
+    if (this.haulers.indexOf(robot) === -1) {
+      throw new Error("not assigned to this");
+    }
+    this.haulers.remove(robot);
+    robot.assignedTo = null;
+  }
+
+  getHaulers(robot) {
+    return this.haulers;
   }
 };
