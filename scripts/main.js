@@ -1,5 +1,5 @@
 const GAME_SIZE = {x: 800, y: 600};
-const TILE_SIZE = {x: 40, y: 40};
+const TILE_SIZE = {x: 40, y: 40, centerX: 20, centerY: 20};
 
 AssetLoader.loadAllAssets(() => {
   startGame();
@@ -10,7 +10,9 @@ function startGame() {
   let gameContainer = new PIXI.Container();
 
   let gameBoard = new GameBoard(gameContainer);
-  gameBoard.createRobot(5 * TILE_SIZE.x, 5 * TILE_SIZE.y);
+  let robot = gameBoard.createRobot(5 * TILE_SIZE.x, 5 * TILE_SIZE.y);
+  let factory = gameBoard.createBuilding(14 * TILE_SIZE.x + TILE_SIZE.centerX, 7 * TILE_SIZE.y + TILE_SIZE.centerY);
+  robot.dropoffItem(factory.x, factory.y);
   let app = new PIXI.Application(GAME_SIZE.x, GAME_SIZE.y, {backgroundColor : 0x1099bb});
   document.getElementById('canvasContainer').appendChild(app.view);
   

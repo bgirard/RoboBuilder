@@ -100,10 +100,14 @@ class GameBoard {
   }
 
   createBuilding(x, y) {
-    this.buildings.push(new Building(this.pixiBuildingContainer , 'factory', x, y)); 
+    let factory = new Building(this.pixiBuildingContainer, 'factory', x, y);
+    this.buildings.push(factory);
+    return factory;
   }
 
   createRobot(x, y) {
-    this.robots.push(new Robot(this.pixiRobotContainer , 'robot', x, y));
+    let robot = new Robot(this.pixiBuildingContainer, 'robot', x, y);
+    this.buildings.push(robot);
+    return robot;
   }
 }
