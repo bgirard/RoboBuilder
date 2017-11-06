@@ -1,5 +1,5 @@
 const GAME_SIZE = {x: 800, y: 600};
-const TILE_SIZE = {x: 40, y: 40};
+const TILE_SIZE = {x: 32, y: 32, centerX: 16, centerY: 16};
 
 AssetLoader.loadAllAssets(() => {
   startGame();
@@ -46,10 +46,13 @@ function startGame() {
 
   // Listen for animate update
   app.ticker.add(function(delta) {
-      // just for fun, let's rotate mr rabbit a little
-      // delta is 1 if running at 100% performance
-      // creates frame-independent tranformation
-      //bunny.rotation += 0.1 * delta;
+    // just for fun, let's rotate mr rabbit a little
+    // delta is 1 if running at 100% performance
+    // creates frame-independent tranformation
+    //bunny.rotation += 0.1 * delta;
+    for (r of gameBoard.getRobots()) {
+      r.onTick(delta);
+    }
   });
 
   const LEFT_ARROW = 37;
