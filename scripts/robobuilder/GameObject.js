@@ -43,8 +43,14 @@ class GameObject {
       let craftingDiv = document.getElementById('craftingStatus');
       craftingDiv.innerHTML = "";
       createElement(craftingDiv, 'div', {}).textContent = "Assigned Robots: " + currBuilding.getHaulers().length;
-      if (currBuilding.getCraftTarget()) {
-        createElement(craftingDiv, 'div', {}).textContent = "Crafting: " + currBuilding.getCraftTarget().name;
+      let craftTarget = currBuilding.getCraftTarget();
+      if (craftTarget) {
+        // Assume that we can't have an in/out item that doesn't match recipe
+        const inputCount = currBuilding.getInputItem() ? 1 : 0;
+        const outputCount = currBuilding.getOutputItem() ? 1 : 0;
+        createElement(craftingDiv, 'div', {}).textContent = "Crafting: " + craftTarget.name;
+        createElement(craftingDiv, 'div', {}).textContent = "Input: " + Item[craftTarget.recipe.input].name + " (" + inputCount + ")";
+        createElement(craftingDiv, 'div', {}).textContent = "Output: " + craftTarget.name + " (" + outputCount + ")";
       }
     }
   }

@@ -7,6 +7,8 @@ class Building {
     this.pixiObject = this.createPixiObject();
     this.haulers = [];
     this.craftTarget = null;
+    this.inputItem = null;
+    this.outputItem = null;
   }
 
   createPixiObject() {
@@ -58,5 +60,32 @@ class Building {
 
   getCraftTarget() {
     return this.craftTarget;
+  }
+
+  getInputItem() {
+    return this.inputItem;
+  }
+
+  takeInputItem() {
+    let r = this.inputItem;
+    this.inputItem = null;
+    return r;
+  }
+
+  takeOutputItem() {
+    let r = this.outputItem;
+    this.outputItem = null;
+    return r;
+  }
+
+  putInputItem(item) {
+    if (this.inputItem) {
+      throw new Error('Already have an input item, cant destroy item.');
+    }
+    this.inputItem = item;
+  }
+
+  getOutputItem() {
+    return this.outputItem;
   }
 };
