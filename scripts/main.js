@@ -50,6 +50,7 @@ function startGame() {
             gameObject.selectedCoord.x, 
             gameObject.selectedCoord.y,
           );
+          gameObject.setSelected(gameObject.selectedCoord);
         }
         break;
       case 'pick-recipe':
