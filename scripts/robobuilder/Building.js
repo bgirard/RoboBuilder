@@ -157,17 +157,12 @@ class Building {
   }
 
   onTick() {
-    // Wait until picked up
-    if (this.getOutputItem()) {
-      return;
-    }
-
     if (this.craftStarted) {
       // Check finish craft
       if (this.getCraftProgress() >= 1) {
         this.finishCraft();
       }
-    } else if (this.getInputItem() && !this.craftStarted) {
+    } else if (!this.getOutputItem() && this.getInputItem() && !this.craftStarted) {
       // Start Craft
       this.startCraft();
     }
