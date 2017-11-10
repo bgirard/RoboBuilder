@@ -124,6 +124,18 @@ class Building {
     this.storage.content[item.name] = (this.storage.content[item.name] || 0) + 1;
   }
 
+  unstoreItem(item) {
+    this.storage.content[item.name] = (this.storage.content[item.name] || 0) - 1;
+    if (this.storage.content[item.name] < 0) {
+      throw new Error('unstored item we didnt have');
+    }
+    return item;
+  }
+
+  getStorageCount(item) {
+    return this.storage.content[item.name] || 0;
+  }
+
   getAllowedStorage() {
     return this.storage.allow;
   }
@@ -161,6 +173,13 @@ class Building {
   }
 
   onTick() {
+    if (this.craftTarget) {
+      let requiredInputItem = Item[this.craftTarget.recipe.input];
+      if (!this.getInputItem() && this.getStorageCount(requiredInputItem)) {
+        let inputItem = this.unstoreItem(requiredInputItem);
+        this.putInputItem(inputItem);
+      }
+    }
     if (this.craftStarted) {
       // Check finish craft
       if (this.getCraftProgress() >= 1) {
