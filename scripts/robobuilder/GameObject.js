@@ -94,6 +94,11 @@ class GameObject {
           const outputCount = currBuilding.getOutputItem() ? 1 : 0;
           return "Output: " + craftTarget.name + " (" + outputCount + ")";
         }, {newline:true});
+        createDynamicLabel(craftingDiv, () => {
+          let craftTarget = currBuilding.getCraftTarget();
+          const outputCount = currBuilding.getOutputItem() ? 1 : 0;
+          return "Crafting: " + Math.floor((currBuilding.getCraftProgress() || 0) * 100) + "%";
+        }, {newline:true});
       }
     }
   }

@@ -92,6 +92,10 @@ class GameBoard {
     return this.robots;
   }
 
+  getBuildings() {
+    return this.buildings;
+  }
+
   getIdleRobots() {
     let array = [];
     for (let r of this.robots) {

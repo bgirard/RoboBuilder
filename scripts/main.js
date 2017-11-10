@@ -83,6 +83,12 @@ function startGame() {
     for (r of gameBoard.getRobots()) {
       r.onTick(delta);
     }
+    for (b of gameBoard.getBuildings()) {
+      b.onTick(delta);
+    }
+    for (r of gameBoard.getRobots()) {
+      r.onTick(delta);
+    }
     gameBoard.updateIdleRobots();
   });
 

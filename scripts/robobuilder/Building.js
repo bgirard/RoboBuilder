@@ -10,6 +10,7 @@ class Building {
     this.inputItem = null;
     this.outputItem = null;
     this.gameObject = gameObject;
+    this.craftStarted = null;
   }
 
   createPixiObject() {
@@ -89,4 +90,43 @@ class Building {
   getOutputItem() {
     return this.outputItem;
   }
+
+  startCraft() {
+    this.takeInputItem();
+    this.craftStarted = performance.now();
+  }
+
+  finishCraft() {
+    this.craftStarted = null;
+    this.outputItem = this.craftTarget;
+  }
+
+  getCraftProgress() {
+    if (!this.craftStarted) {
+      return null;
+    }
+    let fraction = (performance.now() - this.craftStarted) / this.craftTarget.recipe.energy / 1000;
+    if (fraction > 1) {
+      fraction = 1;
+    }
+    return fraction;
+  }
+
+  onTick() {
+    // Wait until picked up
+    if (this.getOutputItem()) {
+      return;
+    }
+
+    if (this.craftStarted) {
+      // Check finish craft
+      if (this.getCraftProgress() >= 1) {
+        this.finishCraft();
+      }
+    } else if (this.getInputItem() && !this.craftStarted) {
+      // Start Craft
+      this.startCraft();
+    }
+  }
+
 };
