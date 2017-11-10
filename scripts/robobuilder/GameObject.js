@@ -99,6 +99,7 @@ class GameObject {
           const outputCount = currBuilding.getOutputItem() ? 1 : 0;
           return "Crafting: " + Math.floor((currBuilding.getCraftProgress() || 0) * 100) + "%";
         }, {newline:true});
+        currBuilding.getStorageControls(craftingDiv);
       }
     }
   }

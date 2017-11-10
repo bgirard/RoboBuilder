@@ -121,7 +121,39 @@ class Building {
   }
 
   storeItem(item) {
-    this.storage.content[item] = (this.storage.content[item] || 0) + 1;
+    this.storage.content[item.name] = (this.storage.content[item.name] || 0) + 1;
+  }
+
+  getAllowedStorage() {
+    return this.storage.allow;
+  }
+
+  setAllowStorage(item, value) {
+    this.storage.allow[item.name] = (value != null ? value : false);
+  }
+
+  getStorageControls(container) {
+    let caption = createElement(container, 'div', {});
+    caption.textContent = 'Storage:';
+
+    for (let i of Object.values(Item)) {
+      let itemDiv = createElement(container, 'div', {});
+      let name = createElement(itemDiv, 'text', {});
+      name.textContent = i.name + ": ";
+      createDynamicLabel(itemDiv, () => {
+        return "x" + (this.storage.content[i.name] || 0);
+      });
+      let allowDisallowBtn = createElement(itemDiv, 'span', {});
+      allowDisallowBtn.setAttribute('data-command', 'onclick');
+      allowDisallowBtn.onclick = function() {
+        this.storage.allow[i.name] = !this.storage.allow[i.name];
+      }.bind(this);
+      createDynamicLabel(allowDisallowBtn, () => {
+        return this.storage.allow[i.name] ? 'Disallow' : 'Allow';
+      });
+    }
+
+    return container;
   }
 
   onTick() {
@@ -139,8 +171,8 @@ class Building {
       // Start Craft
       this.startCraft();
     }
-    if (this.getOutputItem() && this.storage.allow[this.getOutputItem()]) {
-      storeItem(this.takeOutputItem());
+    if (this.getOutputItem() && this.storage.allow[this.getOutputItem().name]) {
+      this.storeItem(this.takeOutputItem());
     }
   }
 
