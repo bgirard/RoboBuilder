@@ -40,7 +40,7 @@ class GameObject {
     let currBuilding = null;
     
     if (this.selectedCoord) {
-      currBuilding= this.gameBoard.getBuilding(
+      currBuilding = this.gameBoard.getBuilding(
         this.selectedCoord.x, 
         this.selectedCoord.y,
       );
@@ -50,5 +50,18 @@ class GameObject {
       let craftingDiv = document.getElementById('craftingStatus');
       currBuilding.populateTab(craftingDiv);
     }
+  }
+
+  invalidateBuilding(building) {
+    if (this.selectedCoord) {
+      let currBuilding = this.gameBoard.getBuilding(
+        this.selectedCoord.x, 
+        this.selectedCoord.y,
+      );
+      if (currBuilding == building) {
+        this.refreshTab();
+      }
+    }
+
   }
 }

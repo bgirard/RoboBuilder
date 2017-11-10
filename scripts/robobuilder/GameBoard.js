@@ -144,6 +144,17 @@ class GameBoard {
         }
       }
     }
+    for (let b of this.getBuildings()) {
+      if (b.getOutputItem() === item || b.getStorageCount(item) >= 1) {
+        const dx = b.x - targetX;
+        const dy = b.y - targetY;
+        const distSq = dx * dx + dy * dy;
+        if (!bestFit || distSq < bestFitDistSq) {
+          bestFit = [x, y];
+          bestFitDistSq = distSq;
+        }
+      }
+    }
     return bestFit;
   }
 

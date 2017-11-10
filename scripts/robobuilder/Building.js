@@ -24,6 +24,7 @@ class Building {
 
   setConstructed() {
     this.constructed = true;
+    this.gameObject.invalidateBuilding(this);
   }
 
   createPixiObject() {

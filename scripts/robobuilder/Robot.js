@@ -91,46 +91,60 @@ class Robot {
     this.pixiObject.y = pos[1];
   }
 
-  updateOrder() {
-    if (!this.order && this.assignedTo && this.assignedTo.getCraftTarget()) {
-      let targetInput = Item[this.assignedTo.getCraftTarget().recipe.input];
-      let pos = this.getCurrentPos();
-      if (!this.cargo) {
-        let target = this.gameObject.gameBoard.findItem(targetInput, pos[0], pos[1]);
-        if (target) {
-          let targetX = target[0] * TILE_SIZE.x + TILE_SIZE.centerX;
-          let targetY = target[1] * TILE_SIZE.y + TILE_SIZE.centerY;
-          if (pos[0] != targetX || pos[1] != targetY) {
-            this.moveTo(targetX, targetY);
-          } else {
-            this.setCargo(targetInput); 
-          }
-        }
-      } else if (this.cargo === targetInput) {
-        let targetX = this.assignedTo.x * TILE_SIZE.x + TILE_SIZE.centerX;
-        let targetY = this.assignedTo.y * TILE_SIZE.y + TILE_SIZE.centerY;
+  getWorkItemTo(targetItem, building, doWorkCallback) {
+    let pos = this.getCurrentPos();
+    if (!this.cargo) {
+      let target = this.gameObject.gameBoard.findItem(targetItem, pos[0], pos[1]);
+      if (target) {
+        let targetX = target[0] * TILE_SIZE.x + TILE_SIZE.centerX;
+        let targetY = target[1] * TILE_SIZE.y + TILE_SIZE.centerY;
         if (pos[0] != targetX || pos[1] != targetY) {
           this.moveTo(targetX, targetY);
         } else {
-          if (this.assignedTo.getInputItem() === null) {
-            let item = this.takeCargo();
-            this.assignedTo.putInputItem(item);
-          }
+          this.setCargo(targetItem); 
         }
-      } else if (this.cargo && this.assignedTo.isStorageAllows(this.cargo)) {
-        // Drop to storage
-        let targetX = this.assignedTo.x * TILE_SIZE.x + TILE_SIZE.centerX;
-        let targetY = this.assignedTo.y * TILE_SIZE.y + TILE_SIZE.centerY;
-        if (pos[0] != targetX || pos[1] != targetY) {
-          this.moveTo(targetX, targetY);
-        } else {
-          let item = this.takeCargo();
-          this.assignedTo.storeItem(item);
-        }
-      } else if (this.cargo && !this.assignedTo.isStorageAllows(this.cargo)) {
-        // Destroy cargo to unblock, may want to change this later
-        this.takeCargo();
       }
+    } else if (this.cargo === targetItem) {
+      let targetX = building.x * TILE_SIZE.x + TILE_SIZE.centerX;
+      let targetY = building.y * TILE_SIZE.y + TILE_SIZE.centerY;
+      if (pos[0] != targetX || pos[1] != targetY) {
+        this.moveTo(targetX, targetY);
+      } else {
+        doWorkCallback();
+      }
+    } else if (this.cargo && building.isStorageAllows(this.cargo)) {
+      // Drop wrong item to storage
+      let targetX = building.x * TILE_SIZE.x + TILE_SIZE.centerX;
+      let targetY = building.y * TILE_SIZE.y + TILE_SIZE.centerY;
+      if (pos[0] != targetX || pos[1] != targetY) {
+        this.moveTo(targetX, targetY);
+      } else {
+        let item = this.takeCargo();
+        building.storeItem(item);
+      }
+    } else if (this.cargo && !building.isStorageAllows(this.cargo)) {
+      // Destroy cargo to unblock, may want to change this later
+      this.takeCargo();
+    }
+
+  }
+
+  updateOrder() {
+    if (!this.order && this.assignedTo && !this.assignedTo.constructed) {
+      this.getWorkItemTo(Item.FACTORY, this.assignedTo, () => {
+        if (!this.constructed) {
+          let item = this.takeCargo();
+          this.assignedTo.setConstructed();
+        }
+      });
+    } else if (!this.order && this.assignedTo && this.assignedTo.constructed && this.assignedTo.getCraftTarget()) {
+      let targetInput = Item[this.assignedTo.getCraftTarget().recipe.input];
+      this.getWorkItemTo(targetInput, this.assignedTo, () => {
+        if (this.assignedTo.getInputItem() === null) {
+          let item = this.takeCargo();
+          this.assignedTo.putInputItem(item);
+        }
+      });
     } else if (this.getMoveProgress() === 1) {
       this.stopOrder(); // Done movement
     }
