@@ -6,6 +6,14 @@ class Building {
     this.y = y;
     this.pixiObject = this.createPixiObject();
     this.haulers = [];
+    this.storage = {
+      allow: {
+        // Item -> true
+      },
+      content: {
+        // Item -> count
+      },
+    };
     this.craftTarget = null;
     this.inputItem = null;
     this.outputItem = null;
@@ -112,6 +120,10 @@ class Building {
     return fraction;
   }
 
+  storeItem(item) {
+    this.storage.content[item] = (this.storage.content[item] || 0) + 1;
+  }
+
   onTick() {
     // Wait until picked up
     if (this.getOutputItem()) {
@@ -126,6 +138,9 @@ class Building {
     } else if (this.getInputItem() && !this.craftStarted) {
       // Start Craft
       this.startCraft();
+    }
+    if (this.getOutputItem() && this.storage.allow[this.getOutputItem()]) {
+      storeItem(this.takeOutputItem());
     }
   }
 
