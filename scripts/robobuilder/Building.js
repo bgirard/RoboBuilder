@@ -19,6 +19,11 @@ class Building {
     this.outputItem = null;
     this.gameObject = gameObject;
     this.craftStarted = null;
+    this.constructed = false;
+  }
+
+  setConstructed() {
+    this.constructed = true;
   }
 
   createPixiObject() {
@@ -194,4 +199,76 @@ class Building {
     }
   }
 
+  populateTab(craftingDiv) {
+    craftingDiv.innerHTML = "";
+    let assignRobotDiv = createElement(craftingDiv, 'div', {});
+    createDynamicLabel(assignRobotDiv, () => {
+      return "Assigned Robots: " + this.getHaulers().length;
+    });
+    let assignCount = createElement(assignRobotDiv, 'text');
+    let assignRobotMinusBtn = createElement(assignRobotDiv, 'span', {});
+    assignRobotMinusBtn.textContent = '-';
+    assignRobotMinusBtn.setAttribute('data-command', 'onclick');
+    assignRobotMinusBtn.onclick = function() {
+      let haulers = this.getHaulers();
+      if (haulers.length === 0) {
+        alert('No hauler robot to unassigned');
+        return;
+      }
+      this.unassignRobot(haulers[0]);
+    }.bind(this);
+    let assignRobotPlusBtn = createElement(assignRobotDiv, 'span', {});
+    assignRobotPlusBtn.textContent = '+';
+    assignRobotPlusBtn.setAttribute('data-command', 'onclick');
+    assignRobotPlusBtn.onclick = function() {
+      let idleRobots = this.gameObject.gameBoard.getIdleRobots();
+      if (idleRobots.length === 0) {
+        alert('No idle robots to assigned');
+        return;
+      }
+      let idleRobot = idleRobots[0];
+      this.assignRobot(idleRobot);
+      this.populateTab(craftingDiv);
+    }.bind(this);
+
+    if (this.constructed) {
+      this.populateTabConstructed(craftingDiv);
+    } else {
+      this.populateTabUnderconstruction(craftingDiv);
+    }
+  }
+
+  populateTabUnderconstruction(craftingDiv) {
+    let caption= createElement(craftingDiv, 'span', {});
+    caption.textContent = 'Under construction, waiting for an assigned robot to place factory';
+  }
+
+  populateTabConstructed(craftingDiv) {
+    if (this.getCraftTarget()) {
+      // Assume that we can't have an in/out item that doesn't match recipe
+      createDynamicLabel(craftingDiv, () => {
+        let craftTarget = this.getCraftTarget();
+        return "Crafting: " + craftTarget.name;
+      }, {newline:true});
+      createDynamicLabel(craftingDiv, () => {
+        let craftTarget = this.getCraftTarget();
+        const inputCount = this.getInputItem() ? 1 : 0;
+        return "Input: " + Item[craftTarget.recipe.input].name + " (" + inputCount + ")";
+      }, {newline:true});
+      createDynamicLabel(craftingDiv, () => {
+        let craftTarget = this.getCraftTarget();
+        const outputCount = this.getOutputItem() ? 1 : 0;
+        return "Output: " + craftTarget.name + " (" + outputCount + ")";
+      }, {newline:true});
+      createDynamicLabel(craftingDiv, () => {
+        let craftTarget = this.getCraftTarget();
+        const outputCount = this.getOutputItem() ? 1 : 0;
+        return "Crafting: " + Math.floor((this.getCraftProgress() || 0) * 100) + "%";
+      }, {newline:true});
+      this.getStorageControls(craftingDiv);
+    }
+    let pickRecipeBtn = createElement(craftingDiv, 'div', {});
+    pickRecipeBtn.textContent = 'Pick Recipe';
+    pickRecipeBtn.setAttribute('data-command', 'pick-recipe');
+  }
 };

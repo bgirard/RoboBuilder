@@ -14,6 +14,8 @@ function startGame() {
   
   let robot = gameBoard.createRobot(5 * TILE_SIZE.x, 5 * TILE_SIZE.y);
   let factory = gameBoard.createBuilding(14, 7);
+  factory.setConstructed();
+  factory.storeItem(Item.FACTORY);
   
   let app = new PIXI.Application(GAME_SIZE.x, GAME_SIZE.y, {backgroundColor : 0x1099bb});
   document.getElementById('canvasContainer').appendChild(app.view);

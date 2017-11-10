@@ -48,59 +48,7 @@ class GameObject {
 
     if (currBuilding) {
       let craftingDiv = document.getElementById('craftingStatus');
-      craftingDiv.innerHTML = "";
-      let assignRobotDiv = createElement(craftingDiv, 'div', {});
-      createDynamicLabel(assignRobotDiv, () => {
-        return "Assigned Robots: " + currBuilding.getHaulers().length;
-      });
-      let assignCount = createElement(assignRobotDiv, 'text');
-      let assignRobotMinusBtn = createElement(assignRobotDiv, 'span', {});
-      assignRobotMinusBtn.textContent = '-';
-      assignRobotMinusBtn.setAttribute('data-command', 'onclick');
-      assignRobotMinusBtn.onclick = function() {
-        let haulers = currBuilding.getHaulers();
-        if (haulers.length === 0) {
-          alert('No hauler robot to unassigned');
-          return;
-        }
-        currBuilding.unassignRobot(haulers[0]);
-      }.bind(this);
-      let assignRobotPlusBtn = createElement(assignRobotDiv, 'span', {});
-      assignRobotPlusBtn.textContent = '+';
-      assignRobotPlusBtn.setAttribute('data-command', 'onclick');
-      assignRobotPlusBtn.onclick = function() {
-        let idleRobots = this.gameBoard.getIdleRobots();
-        if (idleRobots.length === 0) {
-          alert('No idle robots to assigned');
-          return;
-        }
-        let idleRobot = idleRobots[0];
-        currBuilding.assignRobot(idleRobot);
-        this.refreshTab();
-      }.bind(this);
-      if (currBuilding.getCraftTarget()) {
-        // Assume that we can't have an in/out item that doesn't match recipe
-        createDynamicLabel(craftingDiv, () => {
-          let craftTarget = currBuilding.getCraftTarget();
-          return "Crafting: " + craftTarget.name;
-        }, {newline:true});
-        createDynamicLabel(craftingDiv, () => {
-          let craftTarget = currBuilding.getCraftTarget();
-          const inputCount = currBuilding.getInputItem() ? 1 : 0;
-          return "Input: " + Item[craftTarget.recipe.input].name + " (" + inputCount + ")";
-        }, {newline:true});
-        createDynamicLabel(craftingDiv, () => {
-          let craftTarget = currBuilding.getCraftTarget();
-          const outputCount = currBuilding.getOutputItem() ? 1 : 0;
-          return "Output: " + craftTarget.name + " (" + outputCount + ")";
-        }, {newline:true});
-        createDynamicLabel(craftingDiv, () => {
-          let craftTarget = currBuilding.getCraftTarget();
-          const outputCount = currBuilding.getOutputItem() ? 1 : 0;
-          return "Crafting: " + Math.floor((currBuilding.getCraftProgress() || 0) * 100) + "%";
-        }, {newline:true});
-        currBuilding.getStorageControls(craftingDiv);
-      }
+      currBuilding.populateTab(craftingDiv);
     }
   }
 }
