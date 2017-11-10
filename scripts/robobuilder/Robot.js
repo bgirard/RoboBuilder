@@ -117,6 +117,19 @@ class Robot {
             this.assignedTo.putInputItem(item);
           }
         }
+      } else if (this.cargo && this.assignedTo.isStorageAllows(this.cargo)) {
+        // Drop to storage
+        let targetX = this.assignedTo.x * TILE_SIZE.x + TILE_SIZE.centerX;
+        let targetY = this.assignedTo.y * TILE_SIZE.y + TILE_SIZE.centerY;
+        if (pos[0] != targetX || pos[1] != targetY) {
+          this.moveTo(targetX, targetY);
+        } else {
+          let item = this.takeCargo();
+          this.assignedTo.storeItem(item);
+        }
+      } else if (this.cargo && !this.assignedTo.isStorageAllows(this.cargo)) {
+        // Destroy cargo to unblock, may want to change this later
+        this.takeCargo();
       }
     } else if (this.getMoveProgress() === 1) {
       this.stopOrder(); // Done movement

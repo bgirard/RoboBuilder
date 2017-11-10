@@ -132,6 +132,10 @@ class Building {
     this.storage.allow[item.name] = (value != null ? value : false);
   }
 
+  isStorageAllows(item) {
+    return !!this.storage.allow[item.name];
+  }
+
   getStorageControls(container) {
     let caption = createElement(container, 'div', {});
     caption.textContent = 'Storage:';
