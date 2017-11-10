@@ -125,13 +125,32 @@ function startGame() {
   };
 }
 
+function updateTextContent(element, toStringFunc) {
+  let intId = setInterval(function() {
+    if (document.body.contains(element)) {
+      element.textContent = toStringFunc();
+    } else {
+      clearInterval(intId);
+    }
+  });
+  element.textContent = toStringFunc();
+}
+
 function createElement(container, tagName, style) {
   let element = document.createElement(tagName);
+  style = style || {};
   for (let s of Object.keys(style)) {
     element.style[s] = style[s];
   }
   container.appendChild(element);
   return element;
+}
+
+function createDynamicLabel(container, toStringFunc, options) {
+  options = options || {};
+  let textNode = createElement(container, options.newline ? 'div' : 'span');
+  updateTextContent(textNode, toStringFunc);
+  return textNode;
 }
 
 Array.prototype.remove = function(val) {

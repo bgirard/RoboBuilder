@@ -50,7 +50,10 @@ class GameObject {
       let craftingDiv = document.getElementById('craftingStatus');
       craftingDiv.innerHTML = "";
       let assignRobotDiv = createElement(craftingDiv, 'div', {});
-      assignRobotDiv.textContent = "Assigned Robots: " + currBuilding.getHaulers().length;
+      createDynamicLabel(assignRobotDiv, () => {
+        return "Assigned Robots: " + currBuilding.getHaulers().length;
+      });
+      let assignCount = createElement(assignRobotDiv, 'text');
       let assignRobotMinusBtn = createElement(assignRobotDiv, 'span', {});
       assignRobotMinusBtn.textContent = '-';
       assignRobotMinusBtn.setAttribute('data-command', 'onclick');
@@ -61,7 +64,6 @@ class GameObject {
           return;
         }
         currBuilding.unassignRobot(haulers[0]);
-        this.refreshTab();
       }.bind(this);
       let assignRobotPlusBtn = createElement(assignRobotDiv, 'span', {});
       assignRobotPlusBtn.textContent = '+';
@@ -76,14 +78,22 @@ class GameObject {
         currBuilding.assignRobot(idleRobot);
         this.refreshTab();
       }.bind(this);
-      let craftTarget = currBuilding.getCraftTarget();
-      if (craftTarget) {
+      if (currBuilding.getCraftTarget()) {
         // Assume that we can't have an in/out item that doesn't match recipe
-        const inputCount = currBuilding.getInputItem() ? 1 : 0;
-        const outputCount = currBuilding.getOutputItem() ? 1 : 0;
-        createElement(craftingDiv, 'div', {}).textContent = "Crafting: " + craftTarget.name;
-        createElement(craftingDiv, 'div', {}).textContent = "Input: " + Item[craftTarget.recipe.input].name + " (" + inputCount + ")";
-        createElement(craftingDiv, 'div', {}).textContent = "Output: " + craftTarget.name + " (" + outputCount + ")";
+        createDynamicLabel(craftingDiv, () => {
+          let craftTarget = currBuilding.getCraftTarget();
+          return "Crafting: " + craftTarget.name;
+        }, {newline:true});
+        createDynamicLabel(craftingDiv, () => {
+          let craftTarget = currBuilding.getCraftTarget();
+          const inputCount = currBuilding.getInputItem() ? 1 : 0;
+          return "Input: " + Item[craftTarget.recipe.input].name + " (" + inputCount + ")";
+        }, {newline:true});
+        createDynamicLabel(craftingDiv, () => {
+          let craftTarget = currBuilding.getCraftTarget();
+          const outputCount = currBuilding.getOutputItem() ? 1 : 0;
+          return "Output: " + craftTarget.name + " (" + outputCount + ")";
+        }, {newline:true});
       }
     }
   }
