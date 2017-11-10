@@ -58,7 +58,7 @@ class GameBoard {
   }
 
   getGroundType(x, y) {
-    if (x * x + y * y < 100) {
+    if (x * x + y * y < 500) {
       return GroundType.DIRT;
     }
     return GroundType.SPACE;
