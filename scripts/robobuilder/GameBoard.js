@@ -138,7 +138,7 @@ class GameBoard {
           const dy = y - targetY;
           const distSq = dx * dx + dy * dy;
           if (!bestFit || distSq < bestFitDistSq) {
-            bestFit = [x, y];
+            bestFit = [x, y, "ore"];
             bestFitDistSq = distSq;
           }
         }
@@ -150,7 +150,7 @@ class GameBoard {
         const dy = b.y - targetY;
         const distSq = dx * dx + dy * dy;
         if (!bestFit || distSq < bestFitDistSq) {
-          bestFit = [b.x, b.y];
+          bestFit = [b.x, b.y, b];
           bestFitDistSq = distSq;
         }
       }

@@ -100,8 +100,13 @@ class Robot {
         let targetY = target[1] * TILE_SIZE.y + TILE_SIZE.centerY;
         if (pos[0] != targetX || pos[1] != targetY) {
           this.moveTo(targetX, targetY);
-        } else {
+        } else if (target[2] === "ore") {
           this.setCargo(targetItem); 
+        } else if (!!target[2].isBuilding) {
+          let gotItem = target[2].takeItemFromOutputOrStorage(targetItem);
+          if (gotItem) {
+            this.setCargo(gotItem); 
+          }
         }
       }
     } else if (this.cargo === targetItem) {

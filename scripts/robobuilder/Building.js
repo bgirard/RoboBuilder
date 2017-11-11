@@ -20,6 +20,7 @@ class Building {
     this.gameObject = gameObject;
     this.craftStarted = null;
     this.constructed = false;
+    this.isBuilding = true;
   }
 
   setConstructed() {
@@ -86,6 +87,15 @@ class Building {
     let r = this.inputItem;
     this.inputItem = null;
     return r;
+  }
+
+  takeItemFromOutputOrStorage(item) {
+    if (this.inputItem === item) {
+      return this.takeInputItem();
+    } else if (this.storage.content[item.name] >= 1) {
+      return this.unstoreItem(item);
+    }
+    return null;
   }
 
   takeOutputItem() {
